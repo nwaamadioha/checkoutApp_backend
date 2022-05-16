@@ -8,8 +8,14 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-mongoose.connect(process.env.ATLAS_URI);
-
+const connect = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_DB_URI);
+        console.log("Connected to mongoDB");
+    } catch (error) {
+        throw error;
+    }
+};
 
 
 const cardSchema = new mongoose.Schema({
@@ -18,8 +24,8 @@ const cardSchema = new mongoose.Schema({
     cvv: Number,
     amount: Number
 })
-
 const Card = mongoose.model("Card", cardSchema)
+
 app.get("/", function(req, res){
     res.send("Just an API");
   });
@@ -47,5 +53,6 @@ if(port == null || port == ""){
 }
 
 app.listen(port, function(){
+    connect()
     console.log("Server started on port 5000")
 })

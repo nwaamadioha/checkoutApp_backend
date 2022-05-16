@@ -47,6 +47,5 @@ if(port == null || port == ""){
 }
 
 app.listen(port, function(){
-    connect();
     console.log("Server started on port 5000")
 })

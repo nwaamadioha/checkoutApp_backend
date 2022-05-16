@@ -48,15 +48,9 @@ app.post("/", async function(req, res){
 })
 
 
-// mongoose.connect(uri);
-// const connection = mongoose.connection;
-// connection.once("open", () => {
-//     console.log("Mongodb connection established");
-// })
 
 
-const port = process.env.PORT || 5000
-app.listen(port, function(){
+app.listen(process.env.PORT || 3000, function(){
     connect();
     console.log("Server started on port 5000")
 })

@@ -48,9 +48,12 @@ app.post("/", async function(req, res){
 })
 
 
+let port = process.env.PORT;
+if(port == null || port == ""){
+    port = 5000;
+}
 
-
-app.listen(process.env.PORT || 5000, function(){
+app.listen(port, function(){
     connect();
     console.log("Server started on port 5000")
 })

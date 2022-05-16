@@ -27,9 +27,11 @@ const cardSchema = new mongoose.Schema({
 })
 
 const Card = mongoose.model("Card", cardSchema)
+app.get("/", function(req, res){
+    res.send("Just an API");
+  });
 
-
-app.post("/api", async function(req, res){
+app.post("/", async function(req, res){
     const card = new Card(req.body);
     await card.save().then(() => { 
         Card.findOne({ cardNumber: req.body.cardNumber}, function(err, card){

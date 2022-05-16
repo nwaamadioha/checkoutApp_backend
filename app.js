@@ -8,16 +8,9 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
+mongoose.connect(process.env.ATLAS_URI);
 
-const uri = process.env.ATLAS_URI
-const connect = async () => {
-    try {
-        await mongoose.connect(uri);
-        console.log("Connected to mongoDB");
-    } catch (error) {
-        throw error;
-    }
-};
+
 
 const cardSchema = new mongoose.Schema({
     cardNumber: Number,

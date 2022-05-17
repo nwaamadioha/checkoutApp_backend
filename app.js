@@ -8,14 +8,13 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-const connect = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_DB_URI);
-        console.log("Connected to mongoDB");
-    } catch (error) {
-        throw error;
-    }
-};
+const uri = process.env.MONGODB_URI;
+mongoose.connect(uri);
+mongoose.connection.once('open', function(){
+    console.log('Conection has been made!');
+}).on('error', function(error){
+    console.log('Error is: ', error);
+});
 
 
 const cardSchema = new mongoose.Schema({
@@ -30,7 +29,7 @@ app.get("/", function(req, res){
     res.send("Just an API");
   });
 
-app.post("/", async function(req, res){
+app.post("/api", async function(req, res){
     const card = new Card(req.body);
     await card.save().then(() => { 
         Card.findOne({ cardNumber: req.body.cardNumber}, function(err, card){
@@ -53,6 +52,5 @@ if(port == null || port == ""){
 }
 
 app.listen(port, function(){
-    connect()
     console.log("Server started on port 5000")
 })
